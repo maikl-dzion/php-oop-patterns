@@ -59,3 +59,21 @@ echo '<br>';
 $sendTwitterService->send('Прикольные фотки!');
 $sendTwitterService->send('Кто пойдет завтра на вечеринку!');
 echo '<br>';
+
+
+print_r('<br>----- Facade ------<br>');
+
+use App\Controllers\Facade\UserServicesRun;
+
+
+$userParam = [
+   'name'      => 'Maikl',
+   'last_name' => 'Abasov',
+   'age'       => 50,
+   'prof'      => 'Programmer',
+   'sex'       => 'Men',
+];
+
+$facade = new UserServicesRun($userParam);
+
+print_r($facade->report);
