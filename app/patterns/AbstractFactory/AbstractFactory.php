@@ -69,6 +69,7 @@ class FordFactory implements TransportFactory
 class FordCar implements Car
 {
     protected $caseName;
+
     protected $caseTypes = array(
         'sedan' => 'Седан',
         'coupe' => 'Купе',

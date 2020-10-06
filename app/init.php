@@ -28,11 +28,6 @@ function initAdapter() {
         'password' => '1234',
     ];
 
-    $tweetMessage = 'Что нового в twitter сегодня?';
-    $twitter = new Twitter($twitterConf);
-    $twitter->sendMessage($tweetMessage);
-
-
     $instaConf = [
         'service_url' => 'http://bolderfest.ru',
         'api_url' => 'http://bolderfest.ru',
@@ -40,8 +35,14 @@ function initAdapter() {
         'pwd'     => '1234',
     ];
 
-    $instaMessage = 'Очень классная статья,ставим лайки!!!';
+    ob_start();
 
+    $tweetMessage = 'Что нового в twitter сегодня?';
+    $twitter = new Twitter($twitterConf);
+    $twitter->sendMessage($tweetMessage);
+
+
+    $instaMessage = 'Очень классная статья,ставим лайки!!!';
 
     $instaAdapter = new InstagramAdapter($instaConf);
     $instaAdapter->sendMessage($instaMessage);
@@ -63,6 +64,11 @@ function initAdapter() {
     $sendInstaService->send('Кто пойдет завтра на вечеринку!');
     echo '<br>';
 
+
+    $result = ob_get_contents();
+    ob_end_clean();
+
+    return getResult($result);
 }
 
 function initFacade() {
@@ -76,23 +82,48 @@ function initFacade() {
     ];
 
     $facade = new UserServicesRun($userParam);
-    print_r($facade->report);
 
+    return getResult($facade->report);
 }
 
 function initBuilder() {
+    ob_start();
     $builder = new Builder();
+
+    $result = ob_get_contents();
+    ob_end_clean();
+    return getResult($result);
 }
 
 function initFactory() {
+    ob_start();
     $factory = new Factory();
+
+    $result = ob_get_contents();
+    ob_end_clean();
+    return getResult($result);
 }
 
 function initAbstractFactory() {
     $abstractFactory = new AbstractFactory();
+
+    ob_start();
+
     $abstractFactory->run();
+
+    $result = ob_get_contents();
+    ob_end_clean();
+
+    return getResult($result);
 }
 
 
+function getResult($data) {
+    return array('result' => $data);
+}
 
+function show($data) {
+   $r = $data['result'];
+   echo "<pre>" . $r . "</pre>";
+}
 // print_r(new AbstractFactory());
