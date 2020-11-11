@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Controllers\Facade;
+namespace App\Patterns\Facade;
 
 class UserServicesRun  {
+
     protected $userParam;
     public $report = [];
     public function __construct(array $userParam) {

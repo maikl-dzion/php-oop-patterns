@@ -10,16 +10,13 @@ namespace App\Patterns\AbstractFactory;
 
 use App\BaseController;
 
-class AbstractFactory extends BaseController
+class AbstractFactory
 {
-
    public function run() {
 
        $ford = new FordFactory();
        $fordCar = $ford->createCar('sedan');
-
-       echo $this->view->pre($fordCar->car);
-
+       return $fordCar->car;
    }
 
 }

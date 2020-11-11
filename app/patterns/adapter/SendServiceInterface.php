@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Adapter;
+namespace App\Patterns\Adapter;
 
 interface SendServiceInterface
 {

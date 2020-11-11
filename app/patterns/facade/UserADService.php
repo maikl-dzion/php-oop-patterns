@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Patterns\Facade;
 
-namespace App\Controllers\Facade;
-
-class UserGroupService  {
+class UserADService  {
 
     protected $userParam;
 

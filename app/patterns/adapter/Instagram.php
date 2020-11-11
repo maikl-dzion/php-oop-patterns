@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Controllers\Adapter;
+namespace App\Patterns\Adapter;
 
 class Instagram  {
 

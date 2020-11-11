@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Controllers\Facade;
+namespace App\Patterns\Facade;
 
 class UserServicesFacade  {
 
