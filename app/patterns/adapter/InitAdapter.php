@@ -18,18 +18,19 @@ class InitAdapter
 
     public function run() {
         $response = [];
-        $response[] = $this->show(new Book1());
-        $response[] = $this->show(new Book2());
+        $response[] = $this->show(new Book1()); // Стандартный класс
+        $response[] = $this->show(new Book2()); // Стандартный класс
+        $response[] = $this->show(new BookAdapter()); // Адаптируем класс NewBook
         return $response;
     }
 
     protected function show(BookInterface $book) {
         $div1 = '<div>';
         $div2 = '</div>';
-        $content  = $div1 . 'Наименование :' . $book->getName() . $div2;
-        $content .= $div1 . 'Автор :' . $book->getAuthor() . $div2;
-        $content .= $div1 . 'Год выпуска :' . $book->getYear() . $div2;
-        $content .= $div1 . 'Цена :' . $book->getPrice() . $div2;
+        $content  = $div1 . 'Наименование :' . $book->getName()   . $div2;
+        $content .= $div1 . 'Автор :'        . $book->getAuthor() . $div2;
+        $content .= $div1 . 'Год выпуска :'  . $book->getYear()   . $div2;
+        $content .= $div1 . 'Цена :'         . $book->getPrice()  . $div2;
         return $content;
     }
 }
@@ -43,6 +44,7 @@ interface BookInterface
 
 }
 
+// Базовый класс
 class BookService {
 
     protected $name;
@@ -72,6 +74,11 @@ class BookService {
 
 }
 
+////////////////////////////////////////////////////////////
+// Стандартные классы
+// (используют базовый класс BookService
+// и соответствуют интерфейсу BookInterface)
+///////////////////////////////////////////////////////////
 class Book1 extends BookService implements BookInterface
 {
 
@@ -98,41 +105,61 @@ class Book2 extends BookService implements BookInterface
 
 }
 
-/**
- * E-book has an other interface
- */
-// class Kindle
-//{
-//    // do the same as open() in real book
-//    public function turnOn()
-//    {
-//        return "Turn on the Kindle..\n";
-//    }
-//
-//    // do the same as turnPage() in  real book
-//    public function pressNextButton()
-//    {
-//        return "Press next button on Kindle..\n";
-//    }
-//}
-//
-//class KindleAdapter implements BookInterface
-//{
-//    protected $kindle;
-//
-//    // injecting
-//    public function __construct(Kindle $kindle)
-//    {
-//        $this->kindle = $kindle;
-//    }
-//
-//    public function open()
-//    {
-//        return $this->kindle->turnOn();
-//    }
-//
-//    public function turnPage()
-//    {
-//        return $this->kindle->pressNextButton();
-//    }
-//}
+
+////////////////////////////////////////////////////
+/// Адаптер который оборачивает класс  NewBook
+/// и приводит его к общему интерфейсу
+///////////////////////////////////////////////////
+class BookAdapter extends BookService implements BookInterface {
+
+    public function __construct()
+    {
+        $book = new NewBook();
+
+        $this->name   = $book->getBookName();
+        $this->author = $book->getBookAuthor();
+        $this->year   = $book->createYear();
+        $this->price  = $book->getPrice();
+    }
+
+}
+
+////////////////////////////////////////////////////
+/// Нестандартный класс который надо адаптировать //
+///////////////////////////////////////////////////
+class NewBook
+{
+    private $bookName;
+    private $bookAuthor;
+    private $createBookYear;
+    private $price;
+
+    public function __construct()
+    {
+        $this->bookName   = 'Чапаев и пустота';
+        $this->bookAuthor = 'Виктор Пелевин';
+        $this->createBookYear   = '2005';
+        $this->price  = '795';
+    }
+
+    public function getBookName()
+    {
+        return $this->bookName;
+    }
+
+    public function getBookAuthor()
+    {
+        return $this->bookAuthor;
+    }
+
+    public function createYear()
+    {
+        return $this->createBookYear;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+}
