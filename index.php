@@ -9,7 +9,7 @@ $r[] = initAdapter();
 $r[] = initFacade();
 $r[] = initBuilder();
 $r['factory'] = initFactory();
-$r[] = initAbstractFactory();
+// $r[] = initAbstractFactory();
 
 
 
